@@ -1,8 +1,8 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ScriptBall : MonoBehaviour
+public class BallScript : MonoBehaviour
 {
     Rigidbody rigid;
     void Start()
@@ -12,6 +12,6 @@ public class ScriptBall : MonoBehaviour
     }
     void Update()
     {
-        
+
     }
 }

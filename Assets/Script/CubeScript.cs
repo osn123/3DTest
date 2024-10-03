@@ -1,11 +1,11 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Script_Player : MonoBehaviour
+public class CubeScript : MonoBehaviour
 {
     Rigidbody rigid;
-    float jump_speed = 8.0f; // ƒWƒƒƒ“ƒv‚Ì“x‡‚¢
+    float jump_speed = 8.0f; // ã‚¸ãƒ£ãƒ³ãƒ—ã®åº¦åˆã„
 
     // Start is called before the first frame update
     void Start()
@@ -17,10 +17,10 @@ public class Script_Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // ƒ}ƒEƒX¶ƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½‚ç
+        // ãƒã‚¦ã‚¹å·¦ãƒœã‚¿ãƒ³ãŒæŠ¼ã•ã‚ŒãŸã‚‰
         if (Input.GetMouseButtonDown(0))
         {
-            // ƒWƒƒƒ“ƒv‚ğ‚·‚é
+            // ã‚¸ãƒ£ãƒ³ãƒ—ã‚’ã™ã‚‹
             rigid.velocity = Vector3.up * jump_speed;
         }
     }
