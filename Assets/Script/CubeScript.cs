@@ -18,7 +18,7 @@ public class CubeScript : MonoBehaviour
     void Update()
     {
         // マウス左ボタンが押されたら
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(1))
         {
             // ジャンプをする
             rigid.velocity = Vector3.up * jump_speed;

@@ -1,8 +1,8 @@
-ï»¿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Top2PlayerScript : MonoBehaviour
+public class JoyPlayerScp : MonoBehaviour
 {
     #region prop
     public float moveSpeed = 5f;
@@ -24,50 +24,58 @@ public class Top2PlayerScript : MonoBehaviour
 
     void Update()
     {
-        InputProcess();
-        // å…¥åŠ›ã®å–å¾—
+        // “ü—Í‚Ìˆ—
+        ProcessInput();
 
-        if (joystick.Direction != Vector2.zero)
-        {
-            moveDirection = joystick.Direction.normalized;
-        }
+        // ˆÚ“®•ûŒü‚ÌŒvZ
+        CalculateMovement();
+
+        // ƒLƒƒƒ‰ƒNƒ^[‚ÌˆÚ“®‚Æ‰ñ“]
+        MoveAndRotateCharacter();
+
+        // d—Í‚Ì“K—p
+        ApplyGravity();
+    }
+
+    void ProcessInput()
+    {
+        // ƒWƒ‡ƒCƒXƒeƒBƒbƒN“ü—Í‚Ìˆ—
+        Vector2 joystickInput = joystick.Direction;
+
+        // ƒL[ƒ{[ƒh“ü—Í‚Ìˆ—
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
-        // ã‚«ãƒ¡ãƒ©ã®å‘ãã‚’åŸºæº–ã«ã—ãŸç§»å‹•æ–¹å‘ã®è¨ˆç®—
+        // ƒWƒ‡ƒCƒXƒeƒBƒbƒN“ü—Í‚ÆƒL[ƒ{[ƒh“ü—Í‚ğ‘g‚İ‡‚í‚¹‚é
+        moveDirection = new Vector3(joystickInput.x + horizontalInput, 0, joystickInput.y + verticalInput).normalized;
+    }
+
+    void CalculateMovement()
+    {
+        // ƒJƒƒ‰‚ÌŒü‚«‚ğŠî€‚É‚µ‚½ˆÚ“®•ûŒü‚ÌŒvZ
         Vector3 forward = Vector3.ProjectOnPlane(mainCamera.transform.forward, Vector3.up).normalized;
         Vector3 right = Vector3.Cross(Vector3.up, forward);
 
-        // ç§»å‹•ãƒ™ã‚¯ãƒˆãƒ«ã®è¨ˆç®—
-        movement = (forward * verticalInput + right * horizontalInput).normalized;
+        // ˆÚ“®ƒxƒNƒgƒ‹‚ÌŒvZ
+        movement = (forward * moveDirection.z + right * moveDirection.x).normalized;
+    }
 
-        // ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã®ç§»å‹•
+    void MoveAndRotateCharacter()
+    {
         if (movement.magnitude > 0.1f)
         {
-            // ç§»å‹•æ–¹å‘ã‚’å‘ãï¼ˆã‚ªãƒ—ã‚·ãƒ§ãƒ³ï¼šå¿…è¦ã«å¿œã˜ã¦ã‚³ãƒ¡ãƒ³ãƒˆã‚¢ã‚¦ãƒˆå¯èƒ½ï¼‰
+            // ˆÚ“®•ûŒü‚ğŒü‚­
             Quaternion toRotation = Quaternion.LookRotation(movement, Vector3.up);
             transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, rotateSpeed * Time.deltaTime);
 
-            // ç§»å‹•ã®é©ç”¨ï¼ˆç¾åœ¨ã®ä½ç½®ã‚’ç¶­æŒï¼‰
+            // ˆÚ“®‚Ì“K—p
             Vector3 motion = movement * moveSpeed * Time.deltaTime;
             controller.Move(motion);
-            controller.Move(moveDirection);
-
         }
-
-        // é‡åŠ›ã®é©ç”¨ï¼ˆå¿…è¦ã«å¿œã˜ã¦ï¼‰
-        controller.Move(Physics.gravity * Time.deltaTime);
-
-
     }
 
-    // å…¥åŠ›å—ä»˜
-    void InputProcess()
+    void ApplyGravity()
     {
-        // å…¥åŠ›ã‚’æ­£è¦åŒ–ã—ã¦å—ã‘å–ã‚‹
-        float x = Input.GetAxisRaw("Horizontal");
-        float y = Input.GetAxisRaw("Vertical");
-        // å…¥åŠ›ã‚’æ­£è¦åŒ–ã™ã‚‹
-        moveDirection = new Vector2(x, y).normalized;
+        controller.Move(Physics.gravity * Time.deltaTime);
     }
 }
