@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,25 +19,25 @@ public class TopPlayerScript : MonoBehaviour
 
     void Update()
     {
-        // “ü—Í‚Ìæ“¾
+        // å…¥åŠ›ã®å–å¾—
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
-        // ƒJƒƒ‰‚ÌŒü‚«‚ğŠî€‚É‚µ‚½ˆÚ“®•ûŒü‚ÌŒvZ
+        // ã‚«ãƒ¡ãƒ©ã®å‘ãã‚’åŸºæº–ã«ã—ãŸç§»å‹•æ–¹å‘ã®è¨ˆç®—
         Vector3 forward = Vector3.ProjectOnPlane(mainCamera.transform.forward, Vector3.up).normalized;
         Vector3 right = Vector3.Cross(Vector3.up, forward);
 
-        // ˆÚ“®ƒxƒNƒgƒ‹‚ÌŒvZ
+        // ç§»å‹•ãƒ™ã‚¯ãƒˆãƒ«ã®è¨ˆç®—
         movement = (forward * verticalInput + right * horizontalInput).normalized;
 
-        // ƒLƒƒƒ‰ƒNƒ^[‚ÌˆÚ“®
+        // ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã®ç§»å‹•
         if (movement.magnitude > 0.1f)
         {
-            // ˆÚ“®•ûŒü‚ğŒü‚­
+            // ç§»å‹•æ–¹å‘ã‚’å‘ã
             Quaternion toRotation = Quaternion.LookRotation(movement, Vector3.up);
             transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, rotateSpeed * Time.deltaTime);
 
-            // ˆÚ“®‚Ì“K—p
+            // ç§»å‹•ã®é©ç”¨
             controller.Move(movement * moveSpeed * Time.deltaTime);
         }
     }

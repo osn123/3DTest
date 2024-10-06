@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,39 +24,39 @@ public class JoyPlayerScp : MonoBehaviour
 
     void Update()
     {
-        // “ü—Í‚Ìˆ—
+        // å…¥åŠ›ã®å‡¦ç†
         ProcessInput();
 
-        // ˆÚ“®•ûŒü‚ÌŒvZ
+        // ç§»å‹•æ–¹å‘ã®è¨ˆç®—
         CalculateMovement();
 
-        // ƒLƒƒƒ‰ƒNƒ^[‚ÌˆÚ“®‚Æ‰ñ“]
+        // ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã®ç§»å‹•ã¨å›è»¢
         MoveAndRotateCharacter();
 
-        // d—Í‚Ì“K—p
+        // é‡åŠ›ã®é©ç”¨
         ApplyGravity();
     }
 
     void ProcessInput()
     {
-        // ƒWƒ‡ƒCƒXƒeƒBƒbƒN“ü—Í‚Ìˆ—
+        // ã‚¸ãƒ§ã‚¤ã‚¹ãƒ†ã‚£ãƒƒã‚¯å…¥åŠ›ã®å‡¦ç†
         Vector2 joystickInput = joystick.Direction;
 
-        // ƒL[ƒ{[ƒh“ü—Í‚Ìˆ—
+        // ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰å…¥åŠ›ã®å‡¦ç†
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
-        // ƒWƒ‡ƒCƒXƒeƒBƒbƒN“ü—Í‚ÆƒL[ƒ{[ƒh“ü—Í‚ğ‘g‚İ‡‚í‚¹‚é
+        // ã‚¸ãƒ§ã‚¤ã‚¹ãƒ†ã‚£ãƒƒã‚¯å…¥åŠ›ã¨ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰å…¥åŠ›ã‚’çµ„ã¿åˆã‚ã›ã‚‹
         moveDirection = new Vector3(joystickInput.x + horizontalInput, 0, joystickInput.y + verticalInput).normalized;
     }
 
     void CalculateMovement()
     {
-        // ƒJƒƒ‰‚ÌŒü‚«‚ğŠî€‚É‚µ‚½ˆÚ“®•ûŒü‚ÌŒvZ
+        // ã‚«ãƒ¡ãƒ©ã®å‘ãã‚’åŸºæº–ã«ã—ãŸç§»å‹•æ–¹å‘ã®è¨ˆç®—
         Vector3 forward = Vector3.ProjectOnPlane(mainCamera.transform.forward, Vector3.up).normalized;
         Vector3 right = Vector3.Cross(Vector3.up, forward);
 
-        // ˆÚ“®ƒxƒNƒgƒ‹‚ÌŒvZ
+        // ç§»å‹•ãƒ™ã‚¯ãƒˆãƒ«ã®è¨ˆç®—
         movement = (forward * moveDirection.z + right * moveDirection.x).normalized;
     }
 
@@ -64,11 +64,11 @@ public class JoyPlayerScp : MonoBehaviour
     {
         if (movement.magnitude > 0.1f)
         {
-            // ˆÚ“®•ûŒü‚ğŒü‚­
+            // ç§»å‹•æ–¹å‘ã‚’å‘ã
             Quaternion toRotation = Quaternion.LookRotation(movement, Vector3.up);
             transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, rotateSpeed * Time.deltaTime);
 
-            // ˆÚ“®‚Ì“K—p
+            // ç§»å‹•ã®é©ç”¨
             Vector3 motion = movement * moveSpeed * Time.deltaTime;
             controller.Move(motion);
         }
