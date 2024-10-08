@@ -58,6 +58,12 @@ public class JoyPlayerScp : MonoBehaviour
 
         // ジョイスティック入力とキーボード入力を組み合わせる
         moveDirection = new Vector3(joystickInput.x + horizontalInput, 0, joystickInput.y + verticalInput).normalized;
+
+        // 移動入力があるかチェック
+        bool isMoving = Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0;
+
+        // アニメーターのboolパラメーターを設定
+        animator.SetBool("Turn", isMoving);
     }
 
     void CalculateMovement()
