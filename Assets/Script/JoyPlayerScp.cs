@@ -7,6 +7,7 @@ public class JoyPlayerScp : MonoBehaviour
     #region prop
     public float moveSpeed = 5f;
     public float rotateSpeed = 10f;
+    Animator animator;
 
     private Camera mainCamera;
     private CharacterController controller;
@@ -20,6 +21,9 @@ public class JoyPlayerScp : MonoBehaviour
     {
         mainCamera = Camera.main;
         controller = GetComponent<CharacterController>();
+        animator = GetComponent<Animator>();
+
+        animator.applyRootMotion = false;
     }
 
     void Update()
@@ -27,6 +31,11 @@ public class JoyPlayerScp : MonoBehaviour
         // 入力の処理
         ProcessInput();
 
+
+    }
+
+    void LateUpdate()
+    {
         // 移動方向の計算
         CalculateMovement();
 
@@ -35,9 +44,10 @@ public class JoyPlayerScp : MonoBehaviour
 
         // 重力の適用
         ApplyGravity();
+
     }
 
-    void ProcessInput()
+        void ProcessInput()
     {
         // ジョイスティック入力の処理
         Vector2 joystickInput = joystick.Direction;
@@ -71,6 +81,12 @@ public class JoyPlayerScp : MonoBehaviour
             // 移動の適用
             Vector3 motion = movement * moveSpeed * Time.deltaTime;
             controller.Move(motion);
+
+            //animator.speed = movement.magnitude ;
+
+            //float normalizedSpeed = movement.magnitude / Mathf.Sqrt(2);
+            //animator.speed = Mathf.Clamp(normalizedSpeed * 2, 0, 1);
+
         }
     }
 
